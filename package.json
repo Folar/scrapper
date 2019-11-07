@@ -1,0 +1,23 @@
+{
+  "name": "scrapper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "child_process": "^1.0.2",
+    "fs": "0.0.1-security",
+    "moment": "^2.24.0",
+    "nexmo": "^2.5.1",
+    "npm": "^6.12.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "description": ""
+}

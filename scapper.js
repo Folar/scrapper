@@ -1,10 +1,10 @@
-const glenngrp = "https://www.meetup.com/Intellectual-Conversation-Group/";
+const glenngrp = "https://www.meetup.com/Intellectual-Conversation-Group/events/";
 const axios = require("axios");
 const cheerio = require("cheerio");
 const Nexmo = require('nexmo');
 var moment = require('moment');
 var fs =require("fs");  // file system
-
+//var Constants =require("./Constants");
 let kws =["Judy"];
 let links = [];
 function fileread(filename){
@@ -21,16 +21,17 @@ const fetchData = async (siteUrl,keyWrds) => {
 let linkstr = fs.readFileSync("./linkids.txt",'utf8').split('\n')[0];
 links = linkstr.split(",");
 
+let count = 0;
 
 const nexmo = new Nexmo({
-    apiKey: 'xxx',
-    apiSecret: 'xxxxPaop',
+    apiKey: '',
+    apiSecret:'',
 });
 
 const from = '19093081147';
 const to = '16502244155';
 const text = 'Hello from Nexmo';
-let  msg = null;
+let msg = null;
 function parsePage(data){
     let $ = data[0]
     let keys = data[1];
@@ -44,6 +45,9 @@ function parsePage(data){
         for (let j in keys) {
             if (txt.includes(keys[j]) ||( keys.length == 1 && keys[j] == '*')) {
                 if(!links.includes(linkid)) {
+                    if (count == 3)
+                        continue;
+                    count++;
                     linkstr = linkstr + "," + linkid;
                     fs.writeFileSync("./linkids.txt",linkstr);
                     if (msg == null) {
@@ -64,7 +68,7 @@ fetchData(glenngrp,kws).then((data) => {
     console.log(err)
     return;
 });
-fetchData("https://www.meetup.com/Dine-with-us-Dinner-and-Brunch-for-singles/",['*']).then((data) => {
+fetchData("https://www.meetup.com/Dine-with-us-Dinner-and-Brunch-for-singles/events/",['*']).then((data) => {
     parsePage(data)
 }).catch(function (err) {
     console.log(err)
